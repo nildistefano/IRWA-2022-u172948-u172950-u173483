@@ -25,7 +25,7 @@ It is necessary to put the correct data in each of the input/output folders:
 
 The required packages are specified at the top of  `part_1.ipynb`. Note specially,  ` nltk.stopwords` and `nltk.punkt` should be installed if not present.
 
-### Functionality
+#### Functionality
 
 The programs takes as input the `tw_hurricane_data.json` and `tweet_document_ids_map.csv`, reads both files and builds a data frame which is exported to `./output/` as `tweets_df.csv`.  The data frame consists only of the fundamental information of the tweet and the text data is pre-processed.
 
