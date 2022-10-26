@@ -1,0 +1,311 @@
+{
+  'created_at': 'Sat Nov 13 17:59:15 +0000 2021',
+  'id': 1459581640456511488,
+  'id_str': '1459581640456511488',
+  'full_text': "RT @NASA360: .@NASAHubble's snapshot of Cleopatra's Eye is giving astronomers insights into the potential gravitational connection between…",
+  'truncated': False,
+  'display_text_range': [
+    0,
+    139
+  ],
+  'entities': {
+    'hashtags': [],
+    'symbols': [],
+    'user_mentions': [
+      {
+        'screen_name': 'NASA360',
+        'name': 'NASA 360',
+        'id': 42869411,
+        'id_str': '42869411',
+        'indices': [
+          3,
+          11
+        ]
+      },
+      {
+        'screen_name': 'NASAHubble',
+        'name': 'Hubble',
+        'id': 14091091,
+        'id_str': '14091091',
+        'indices': [
+          14,
+          25
+        ]
+      }
+    ],
+    'urls': []
+  },
+  'source': '<a href="http://twitter.com/download/iphone" rel="nofollow">Twitter for iPhone</a>',
+  'in_reply_to_status_id': None,
+  'in_reply_to_status_id_str': None,
+  'in_reply_to_user_id': None,
+  'in_reply_to_user_id_str': None,
+  'in_reply_to_screen_name': None,
+  'user': {
+    'id': 14091091,
+    'id_str': '14091091',
+    'name': 'Hubble',
+    'screen_name': 'NASAHubble',
+    'location': 'Goddard Space Flight Center',
+    'description': "The official Twitter account for the NASA Hubble Space Telescope, managed and operated by NASA's Goddard Space Flight Center.",
+    'url': 'https://t.co/3bfzzsw25s',
+    'entities': {
+      'url': {
+        'urls': [
+          {
+            'url': 'https://t.co/3bfzzsw25s',
+            'expanded_url': 'http://www.nasa.gov/mission_pages/hubble/main/index.html',
+            'display_url': 'nasa.gov/mission_pages/…',
+            'indices': [
+              0,
+              23
+            ]
+          }
+        ]
+      },
+      'description': {
+        'urls': []
+      }
+    },
+    'protected': False,
+    'followers_count': 7279083,
+    'friends_count': 138,
+    'listed_count': 12704,
+    'created_at': 'Thu Mar 06 20:15:02 +0000 2008',
+    'favourites_count': 1067,
+    'utc_offset': None,
+    'time_zone': None,
+    'geo_enabled': False,
+    'verified': True,
+    'statuses_count': 6404,
+    'lang': None,
+    'contributors_enabled': False,
+    'is_translator': False,
+    'is_translation_enabled': False,
+    'profile_background_color': '000000',
+    'profile_background_image_url': 'http://abs.twimg.com/images/themes/theme1/bg.png',
+    'profile_background_image_url_https': 'https://abs.twimg.com/images/themes/theme1/bg.png',
+    'profile_background_tile': True,
+    'profile_image_url': 'http://pbs.twimg.com/profile_images/3468011581/efb985f24af0a814a722457a768f3cc5_normal.jpeg',
+    'profile_image_url_https': 'https://pbs.twimg.com/profile_images/3468011581/efb985f24af0a814a722457a768f3cc5_normal.jpeg',
+    'profile_banner_url': 'https://pbs.twimg.com/profile_banners/14091091/1635776838',
+    'profile_link_color': '0000FF',
+    'profile_sidebar_border_color': '000000',
+    'profile_sidebar_fill_color': 'E0FF92',
+    'profile_text_color': '000000',
+    'profile_use_background_image': True,
+    'has_extended_profile': False,
+    'default_profile': False,
+    'default_profile_image': False,
+    'following': None,
+    'follow_request_sent': None,
+    'notifications': None,
+    'translator_type': 'none',
+    'withheld_in_countries': []
+  },
+  'geo': None,
+  'coordinates': None,
+  'place': None,
+  'contributors': None,
+  'retweeted_status': {
+    'created_at': 'Sat Nov 13 14:40:00 +0000 2021',
+    'id': 1459531496792932357,
+    'id_str': '1459531496792932357',
+    'full_text': ".@NASAHubble's snapshot of Cleopatra's Eye is giving astronomers insights into the potential gravitational connection between certain planetary nebulae and nearby companion stars. Is this a gravitationally bound binary star system? Perhaps: https://t.co/0xAyUSAY9Y https://t.co/1E77kVEISb",
+    'truncated': False,
+    'display_text_range': [
+      0,
+      264
+    ],
+    'entities': {
+      'hashtags': [],
+      'symbols': [],
+      'user_mentions': [
+        {
+          'screen_name': 'NASAHubble',
+          'name': 'Hubble',
+          'id': 14091091,
+          'id_str': '14091091',
+          'indices': [
+            1,
+            12
+          ]
+        }
+      ],
+      'urls': [
+        {
+          'url': 'https://t.co/0xAyUSAY9Y',
+          'expanded_url': 'https://go.nasa.gov/3HiyAPV',
+          'display_url': 'go.nasa.gov/3HiyAPV',
+          'indices': [
+            241,
+            264
+          ]
+        }
+      ],
+      'media': [
+        {
+          'id': 1459123866391961600,
+          'id_str': '1459123866391961600',
+          'indices': [
+            265,
+            288
+          ],
+          'media_url': 'http://pbs.twimg.com/media/FD_ZbPuWYAAzsJf.jpg',
+          'media_url_https': 'https://pbs.twimg.com/media/FD_ZbPuWYAAzsJf.jpg',
+          'url': 'https://t.co/1E77kVEISb',
+          'display_url': 'pic.twitter.com/1E77kVEISb',
+          'expanded_url': 'https://twitter.com/NASA360/status/1459531496792932357/photo/1',
+          'type': 'photo',
+          'sizes': {
+            'thumb': {
+              'w': 150,
+              'h': 150,
+              'resize': 'crop'
+            },
+            'large': {
+              'w': 1041,
+              'h': 586,
+              'resize': 'fit'
+            },
+            'small': {
+              'w': 680,
+              'h': 383,
+              'resize': 'fit'
+            },
+            'medium': {
+              'w': 1041,
+              'h': 586,
+              'resize': 'fit'
+            }
+          }
+        }
+      ]
+    },
+    'extended_entities': {
+      'media': [
+        {
+          'id': 1459123866391961600,
+          'id_str': '1459123866391961600',
+          'indices': [
+            265,
+            288
+          ],
+          'media_url': 'http://pbs.twimg.com/media/FD_ZbPuWYAAzsJf.jpg',
+          'media_url_https': 'https://pbs.twimg.com/media/FD_ZbPuWYAAzsJf.jpg',
+          'url': 'https://t.co/1E77kVEISb',
+          'display_url': 'pic.twitter.com/1E77kVEISb',
+          'expanded_url': 'https://twitter.com/NASA360/status/1459531496792932357/photo/1',
+          'type': 'photo',
+          'sizes': {
+            'thumb': {
+              'w': 150,
+              'h': 150,
+              'resize': 'crop'
+            },
+            'large': {
+              'w': 1041,
+              'h': 586,
+              'resize': 'fit'
+            },
+            'small': {
+              'w': 680,
+              'h': 383,
+              'resize': 'fit'
+            },
+            'medium': {
+              'w': 1041,
+              'h': 586,
+              'resize': 'fit'
+            }
+          }
+        }
+      ]
+    },
+    'source': '<a href="https://mobile.twitter.com" rel="nofollow">Twitter Web App</a>',
+    'in_reply_to_status_id': None,
+    'in_reply_to_status_id_str': None,
+    'in_reply_to_user_id': None,
+    'in_reply_to_user_id_str': None,
+    'in_reply_to_screen_name': None,
+    'user': {
+      'id': 42869411,
+      'id_str': '42869411',
+      'name': 'NASA 360',
+      'screen_name': 'NASA360',
+      'location': 'Earth, Orion Arm, Milky Way',
+      'description': 'Fueling your space addiction since 2009. Fill ‘er up ⛽️',
+      'url': 'https://t.co/pjop7yVWnM',
+      'entities': {
+        'url': {
+          'urls': [
+            {
+              'url': 'https://t.co/pjop7yVWnM',
+              'expanded_url': 'http://www.nasa.gov/nasa360',
+              'display_url': 'nasa.gov/nasa360',
+              'indices': [
+                0,
+                23
+              ]
+            }
+          ]
+        },
+        'description': {
+          'urls': []
+        }
+      },
+      'protected': False,
+      'followers_count': 160182,
+      'friends_count': 335,
+      'listed_count': 1971,
+      'created_at': 'Wed May 27 12:20:47 +0000 2009',
+      'favourites_count': 172,
+      'utc_offset': None,
+      'time_zone': None,
+      'geo_enabled': False,
+      'verified': True,
+      'statuses_count': 8696,
+      'lang': None,
+      'contributors_enabled': False,
+      'is_translator': False,
+      'is_translation_enabled': False,
+      'profile_background_color': '9AE4E8',
+      'profile_background_image_url': 'http://abs.twimg.com/images/themes/theme1/bg.png',
+      'profile_background_image_url_https': 'https://abs.twimg.com/images/themes/theme1/bg.png',
+      'profile_background_tile': True,
+      'profile_image_url': 'http://pbs.twimg.com/profile_images/1372517039248715776/eFEYnXXh_normal.jpg',
+      'profile_image_url_https': 'https://pbs.twimg.com/profile_images/1372517039248715776/eFEYnXXh_normal.jpg',
+      'profile_banner_url': 'https://pbs.twimg.com/profile_banners/42869411/1613753375',
+      'profile_link_color': '0084B4',
+      'profile_sidebar_border_color': 'BDDCAD',
+      'profile_sidebar_fill_color': 'DDFFCC',
+      'profile_text_color': '333333',
+      'profile_use_background_image': True,
+      'has_extended_profile': False,
+      'default_profile': False,
+      'default_profile_image': False,
+      'following': None,
+      'follow_request_sent': None,
+      'notifications': None,
+      'translator_type': 'none',
+      'withheld_in_countries': []
+    },
+    'geo': None,
+    'coordinates': None,
+    'place': None,
+    'contributors': None,
+    'is_quote_status': False,
+    'retweet_count': 177,
+    'favorite_count': 1340,
+    'favorited': False,
+    'retweeted': False,
+    'possibly_sensitive': False,
+    'lang': 'en'
+  },
+  'is_quote_status': False,
+  'retweet_count': 177,
+  'favorite_count': 0,
+  'favorited': False,
+  'retweeted': False,
+  'lang': 'en'
+}
