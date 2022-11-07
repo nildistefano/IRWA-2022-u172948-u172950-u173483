@@ -39,13 +39,15 @@ The script can be run directly.
 
 Verify that the correct data in each of the input/output folders exists:
 
+- **Input data:**
+  - `evaluation_gt.csv`
+
 - **Output data:** 
 
   Contained in `./output/` by default. Should contain:
 
-  - `tweets_df.csv` (output from Part 1)
+  - `tweets_df.csv` (output from `part_1.ipynb`)
   - `judges_evaluation_gt.csv` (may be updated during execution)
-  - `evaluation_gt.csv`
 
 The required packages are specified at the top of  `part_2.ipynb`. 
 
