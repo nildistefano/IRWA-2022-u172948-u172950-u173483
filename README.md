@@ -30,3 +30,32 @@ The required packages are specified at the top of  `part_1.ipynb`. Note speciall
 The programs takes as input the `tw_hurricane_data.json` and `tweet_document_ids_map.csv`, reads both files and builds a data frame which is exported to `./output/` as `tweets_df.csv`.  The data frame consists only of the fundamental information of the tweet and the text data is pre-processed.
 
 The script can be run directly.
+
+
+
+## Part 2: Indexing and Evaluation
+
+### Before running
+
+Verify that the correct data in each of the input/output folders exists:
+
+- **Input data:**
+  - `evaluation_gt.csv`
+
+- **Output data:** 
+
+  Contained in `./output/` by default. Should contain:
+
+  - `tweets_df.csv` (output from `part_1.ipynb`)
+  - `judges_evaluation_gt.csv` (may be updated during execution)
+
+The required packages are specified at the top of  `part_2.ipynb`. 
+
+### Functionality
+
+The programs takes as input the `tweets_df.csv` generated in the previous part. Builds an index for each term in the collection of tweets and stores term frequencies and inverse document frequencies. The program then takes a set of queries and evaluates the ranking performance based on the ground truth provided by `evaluation_gt.csv`. Similarly the user can build a ground truth for another set of queries that will be stored in `judges_evaluation_gt.csv`. A default version of this file is provided.
+
+The script can be run directly.
+
+
+
