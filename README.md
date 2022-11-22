@@ -57,5 +57,29 @@ The programs takes as input the `tweets_df.csv` generated in the previous part. 
 
 The script can be run directly.
 
+## Part 3: Ranking
+
+### Before running
+
+Verify that the correct data in each of the input/output folders exists:
+
+- **Output data:** 
+
+  Contained in `./output/` by default. Should contain:
+
+  - `tweets_df.csv` (output from `part_1.ipynb`)
+
+The required packages are specified at the top of  `part_2.ipynb`. 
+
+### Functionality
+
+The programs takes as input the `tweets_df.csv` generated in part 1. Builds an index for each term in the collection of tweets and stores term frequencies and inverse document frequencies. The program then takes a set of queries and performs a ranking in 4 different ways: 
+- TF-IDF + Cosine Similariy
+- BM25
+- Weighted TF-IDF plus tweet relevance (hashtags, likes, retweets) See report.
+- Tweet2Vec (mean word2vec representation of the terms) + Cosine Similarity
+
+The script can be run directly.
+
 
 
