@@ -74,7 +74,7 @@ Verify that the correct data in each of the input/output folders exists:
 
   - `tweets_df.csv` (output from `part_1.ipynb`)
 
-The required packages are specified at the top of  `part_2.ipynb`. 
+The required packages are specified at the top of  `part_3.ipynb`. 
 
 ### Functionality
 
