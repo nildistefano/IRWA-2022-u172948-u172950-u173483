@@ -12,6 +12,11 @@ from myapp.search.load_corpus import load_corpus
 from myapp.search.objects import Document, StatsDocument
 from myapp.search.search_engine import SearchEngine
 
+# FUNCIONES AUXILIARES #
+from myapp.search.aux_functions import create_index_tfidf
+from myapp.search.aux_functions import load_index_tfidf
+from myapp.search.aux_functions import save_index_tfidf
+
 
 # *** for using method to_json in objects ***
 def _default(self, obj):
@@ -48,7 +53,17 @@ file_path = path + "/tweets-data-who.json"
 # file_path = "../../tweets-data-who.json"
 corpus = load_corpus(file_path)
 print("loaded corpus. first elem:", list(corpus.values())[0])
+print(corpus.values())
 
+
+# # CARGAMOS EL ÍNDICE INVERSO #
+index_path = "../index_files"
+try:
+    index, tf, df, idf = load_index_tfidf(index_path)
+except:
+    print("Index not found into local storage: Creating a new index")
+    index, tf, df, idf = create_index_tfidf(corpus)
+    save_index_tfidf(index, tf, df, idf)
 
 # Home URL "/"
 @app.route('/')
