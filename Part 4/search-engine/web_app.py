@@ -1,9 +1,11 @@
 import os
 from json import JSONEncoder
+from datetime import datetime
 
 # pip install httpagentparser
 import httpagentparser  # for getting the user agent as json
 import nltk
+import flask
 from flask import Flask, render_template, session
 from flask import request
 
@@ -42,6 +44,9 @@ search_engine = SearchEngine()
 # instantiate our in memory persistence
 analytics_data = AnalyticsData()
 
+
+
+
 # print("current dir", os.getcwd() + "\n")
 # print("__file__", __file__ + "\n")
 full_path = os.path.realpath(__file__)
@@ -69,23 +74,45 @@ docu_length = dict()
 for doc in corpus.values():
     docu_length[doc.id] = len(doc.description)
 
+# just_entered bool
+global just_entered 
+just_entered = True
+
+
 
 # Home URL "/"
 @app.route('/')
 def index():
     print("starting home url /...")
-
+    global just_entered
     # flask server creates a session by persisting a cookie in the user's browser.
     # the 'session' object keeps data between multiple requests
     session['some_var'] = "IRWA 2021 home"
+    if(just_entered):
+        print("Just entered...")
+        # Analytics for the user
+        #...Getting the data
+        browser = request.headers.get('User-Agent') #esto hay que gestionarlo que da un string raro
+        ip = request.remote_addr
+        country = "Spain" #get country from IP
+        city = "Barcelona" #get city from IP
+        #...Storing rhe data
+        analytics_data.add_fact_browser(browser)
+        analytics_data.add_fact_city(city)
+        analytics_data.add_fact_country(country)
+        analytics_data.add_fact_ip(ip)
 
-    user_agent = request.headers.get('User-Agent')
-    print("Raw user browser:", user_agent)
+        # Analytics of the session
+        #...Getting the data
+        local_time = str(datetime.now())
+        #...Storing the data
+        analytics_data.add_fact_time_of_day(local_time)
 
-    user_ip = request.remote_addr
-    agent = httpagentparser.detect(user_agent)
-
-    print("Remote IP: {} - JSON user browser {}".format(user_ip, agent))
+        # Other stuf...
+        #agent = httpagentparser.detect(browser)
+        #print("Remote IP: {} - JSON user browser {}".format(ip, agent))
+        just_entered = False #so it is not filled again
+        
 
     print(session)
 
@@ -99,6 +126,13 @@ def search_form_post():
     session['last_search_query'] = search_query
 
     search_id = analytics_data.save_query_terms(search_query)
+
+    # Analytics of the query
+    #...Storing the data
+    analytics_data.add_fact_query(search_query)
+    analytics_data.add_fact_query_length(len(search_query))
+    for term in search_query:
+        analytics_data.add_fact_terms_count(term)
 
     #results = search_engine.search(search_query, search_id, corpus)
     ranking_method = "tf-idf_cosine-similarity"
