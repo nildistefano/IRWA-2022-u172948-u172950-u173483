@@ -51,19 +51,24 @@ path, filename = os.path.split(full_path)
 file_path = path + "/tweets-data-who.json"
 
 # file_path = "../../tweets-data-who.json"
-corpus = load_corpus(file_path)
-print("loaded corpus. first elem:", list(corpus.values())[0])
-print(corpus.values())
+corpus = load_corpus(file_path) #We get a dictionnary key=doc_id, values-> <class 'myapp.search.objects.Document'>
+#If you want to get a document title you should do corpus[id].title
 
 
 # # CARGAMOS EL ÍNDICE INVERSO #
-index_path = "../index_files"
+index_path = path + "/lab_material/"
 try:
-    index, tf, df, idf = load_index_tfidf(index_path)
+     our_index, tf, df, idf = load_index_tfidf(index_path)
 except:
-    print("Index not found into local storage: Creating a new index")
-    index, tf, df, idf = create_index_tfidf(corpus)
-    save_index_tfidf(index, tf, df, idf)
+     print("Index not found into local storage: Creating a new index")
+     our_index, tf, df, idf = create_index_tfidf(corpus)
+     save_index_tfidf(our_index, tf, df, idf, index_path)
+
+#creating docu_length
+docu_length = dict()
+for doc in corpus.values():
+    docu_length[doc.id] = len(doc.description)
+
 
 # Home URL "/"
 @app.route('/')
@@ -95,7 +100,10 @@ def search_form_post():
 
     search_id = analytics_data.save_query_terms(search_query)
 
-    results = search_engine.search(search_query, search_id, corpus)
+    #results = search_engine.search(search_query, search_id, corpus)
+    ranking_method = "tf-idf_cosine-similarity"
+    #ranking_method = "bm25"
+    results = search_engine.search(corpus, search_id, search_query, our_index, ranking_method, idf, tf, docu_length)
 
     found_count = len(results)
     session['last_found_count'] = found_count
@@ -188,4 +196,4 @@ def sentiment_form_post():
 
 
 if __name__ == "__main__":
-    app.run(port=8088, host="0.0.0.0", threaded=False, debug=True)
+    app.run(port=8088, host="0.0.0.0", threaded=False, debug=True) 
