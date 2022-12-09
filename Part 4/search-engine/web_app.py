@@ -14,11 +14,28 @@ from myapp.search.load_corpus import load_corpus
 from myapp.search.objects import Document, StatsDocument
 from myapp.search.search_engine import SearchEngine
 
-# FUNCIONES AUXILIARES #
+# ----- FUNCIONES AUXILIARES ----- #
 from myapp.search.aux_functions import create_index_tfidf
 from myapp.search.aux_functions import load_index_tfidf
 from myapp.search.aux_functions import save_index_tfidf
 
+# ----- MONGO DB ----- #
+from pymongo import MongoClient
+# Connect to database server (local)
+mongodb = MongoClient('mongodb://localhost:27017/')
+print(mongodb.server_info())
+# Get database info
+db = mongodb['search_engine']
+# Get collections
+db_session = db['session']
+db_clicks = db['clicks']
+db_request = db['request']
+
+doc = {"session": "heyllo",
+       "text": "chinchuechonchan"}
+
+x = db_session.insert_one(doc)
+print(x.inserted_id)
 
 # *** for using method to_json in objects ***
 def _default(self, obj):

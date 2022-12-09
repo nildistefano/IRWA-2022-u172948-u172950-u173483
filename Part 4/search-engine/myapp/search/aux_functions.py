@@ -178,6 +178,68 @@ def rank_documents_bm25(terms, docs, index, idf, tf, k1, b, N, docu_length, lavg
     #print ('\n'.join(result_docs), '\n')
     return doc_scores
 
+def rank_documents_dedicated(terms, docs, index, idf, tf, k1, b, N, docu_length, lavg, info):
+    """
+    Perform the ranking of the results of a search based on the tf-idf weights
+    
+    Argument:
+    terms -- list of query terms
+    docs -- list of documents, to rank, matching the query
+    index -- inverted index data structure
+    idf -- inverted document frequencies
+    tf -- term frequencies
+    info -- Info that will be used to add puntuation to the document
+    
+    Returns:
+    list of ranked documents
+    """
+
+    # I'm interested only on the element of the docVector corresponding to the query terms 
+    # The remaining elements would became 0 when multiplied to the query_vector
+    doc_vectors = defaultdict(lambda: [0] * len(terms)) # I call doc_vectors[k] for a nonexistent key k, the key-value pair (k,[0]*len(terms)) will be automatically added to the dictionary
+
+
+    for termIndex, term in enumerate(terms):  #termIndex is the index of the term in the query
+        if len(index[term])==0:
+            continue
+        
+        # Generate doc_vectors for matching docs
+        for doc_index, (doc, postings) in enumerate(index[term]):         
+            if doc in docs:
+                dft = len(index[term]) #in how many documents does it appear
+                ld = docu_length[doc] #document length
+                doc_vectors[doc][termIndex] = np.log(N/dft) * (((k1+1)*tf[term][doc_index]) / (k1*((1-b)+b*( ld / lavg ) ) + tf[term][doc_index]))
+    
+    # Calculate the score of each doc (the sum of the results)    
+    doc_scores=[[np.sum(curDocVec), doc] for doc, curDocVec in doc_vectors.items() ]
+    doc_scores = []
+    doc_scores_info = []
+
+    for doc, curDocVec in doc_vectors.items():
+        # BM score
+        bm_score = np.sum(curDocVec)
+        # Hashtag score
+        h_score = len([term for term in terms if term.lower() in [x.lower() for x in info[info['Document'] == doc]['Hashtags']]])/len(terms)
+        # Likes score
+        l_score = math.log(1+(info[info['Document'] == doc]['Likes']/1 + info['Likes'].max()))
+        # Retweets score
+        r_score = math.log(1+(info[info['Document'] == doc]['Retweets']/1 + info['Retweets'].max()))
+        # Relevance score
+        relevance_score = 0.4 * h_score + 0.3 * l_score + 0.3 * r_score
+        # Dedicated score
+        total_score = bm_score * (1+relevance_score)/relevance_score
+        doc_scores.append([total_score, doc])
+        doc_scores_info.append([bm_score, h_score, l_score, r_score, doc])
+
+
+    doc_scores.sort(reverse=True)
+    #print document titles instead if document id's
+    #result_docs=[ title_index[x] for x in result_docs ]
+    if len(doc_scores) == 0:
+        print("No results found for query")
+    #print ('\n'.join(result_docs), '\n')
+    return doc_scores, doc_scores_info
+
 #Let's keep that as a reference
 def rank_documents(terms, docs, index, idf, tf):
     """
@@ -260,8 +322,7 @@ def search_tf_idf(query, index, ranking, idf, tf, docu_length):
     if (ranking == "bm25"):
         ranked_docs = rank_documents_bm25(query, docs, index, idf, tf, k1 = 1.6, b = 0.75, N = len(docu_length), docu_length = docu_length, lavg=lavg) #TO-DO new formula!! (new function, new attributes)
     elif ranking == "dedicated":
-        #ranked_docs, _ = rank_documents_dedicated(query, docs, index, idf, tf, k1 = 1.6, b = 0.75, N = data.shape[0], docu_length = docu_length, lavg = lavg, info=data[['Document', 'Hashtags', 'Likes', 'Retweets']])
-        return 0
+        ranked_docs, _ = rank_documents_dedicated(query, docs, index, idf, tf, k1 = 1.6, b = 0.75, N = len(docu_length), docu_length = docu_length, lavg = lavg, info=data[['Document', 'Hashtags', 'Likes', 'Retweets']]) 
     elif (ranking == "tf-idf_cosine-similarity"):
         ranked_docs = rank_documents(query, docs, index, idf, tf)
     else:
