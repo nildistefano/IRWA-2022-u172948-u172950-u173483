@@ -7,7 +7,11 @@
         <p>&nbsp;</p>
         <form class="d-flex" method="POST" onSubmit='return validate();' action="/search">
             <input class="form-control me-2" name="search-query" type="search" placeholder="Search" aria-label="Search"
-                   autofocus="autofocus">
+                   autofocus="autofocus" required>
+            <select name="ranking" id="ranking">
+                <option value="tf-idf_cosine-similarity">TF-IDF Cosine Similarity</option>
+                <option value="bm25">BM25</option>
+            </select>
             <button class="btn btn-primary" type="submit" onclick='this.form.submit();'>Search</button>
             <input name="upf-irwa-hidden" type="hidden" value="123">
         </form>

@@ -139,6 +139,7 @@ def index():
 @app.route('/search', methods=['POST'])
 def search_form_post():
     search_query = request.form['search-query']
+    ranking_method = request.form['ranking']
 
     session['last_search_query'] = search_query
 
@@ -152,8 +153,8 @@ def search_form_post():
         analytics_data.add_fact_terms_count(term)
 
     #results = search_engine.search(search_query, search_id, corpus)
-    ranking_method = "tf-idf_cosine-similarity"
-    #ranking_method = "bm25"
+    # ranking_method = "tf-idf_cosine-similarity"
+    # #ranking_method = "bm25"
     results = search_engine.search(corpus, search_id, search_query, our_index, ranking_method, idf, tf, docu_length)
 
     found_count = len(results)
@@ -218,17 +219,17 @@ def stats():
 @app.route('/dashboard', methods=['GET'])
 def dashboard():
     visited_docs = []
-    print(analytics_data.fact_clicks.keys())
-    for doc_id in analytics_data.fact_clicks.keys():
+    for doc_id in analytics_data.fact_clicks:
         d: Document = corpus[int(doc_id)]
         doc = ClickedDoc(doc_id, d.description, analytics_data.fact_clicks[doc_id])
         visited_docs.append(doc)
 
     # simulate sort by ranking
     visited_docs.sort(key=lambda doc: doc.counter, reverse=True)
-
-    for doc in visited_docs: print(doc)
-    return render_template('dashboard.html', visited_docs=visited_docs)
+    visited_ser=[]
+    for doc in visited_docs:
+        visited_ser.append(doc.to_json())
+    return render_template('dashboard.html', visited_docs=visited_ser)
 
 
 @app.route('/sentiment')
