@@ -1,13 +1,98 @@
 import json
 import random
 
+# ----- MONGO DB ----- #
+from pymongo import MongoClient
+
+
+# ----- DATA STRUCTURES ----- #
+from myapp.search.objects import Conection
+from myapp.search.objects import Query
+
+
 
 class AnalyticsData:
     """
     An in memory persistence object.
     Declare more variables to hold analytics tables.
     """
+    # Connect to database server (local)
+    mongodb = MongoClient('mongodb://localhost:27017/')
+    print(mongodb.server_info())
+    # Get database info
+    db = mongodb['search_engine']
+    # Get collections
+    db_session = db['session']
+    db_queries = db['queries']
+    db_clicks = db['clicks']
+    db_request = db['request']
+    db_connections = db['connections']
 
+
+    ### --------- CONNECTIONS COLLECTION --------- ###
+    new_connections = []
+
+    # ADD CONNECTION
+    def add_connection(self, ip, country, city, browser, date):
+        '''
+        Creates a connection instance an adds it to the list of new connections
+        '''
+        print("adding new connection...")
+        connection_info = Conection(ip, country, city, browser, date)
+        print(connection_info.to_json())
+        self.new_connections.append(connection_info)
+
+        return connection_info
+
+    def connections_post(self):
+        '''
+        Inserts the connections list into the database
+        '''
+
+        connections_list = [connection.to_json() for connection in self.new_connections]
+        self.new_connections = []
+        self.db_connections.insert_many(connections_list)
+
+    def connections_get(self, query):
+        '''
+        Returns a list of connections based on the query sent
+        '''
+
+
+        return self.db_connections.find(query)
+    
+
+    ### --------- QUERIES COLLECTION --------- ###
+    new_queries = []
+
+    # ADD CONNECTION
+    def add_query(self, query_id, query, results, ip, engine, date):
+        '''
+        Creates a connection instance an adds it to the list of new connections
+        '''
+        print("adding new query...")
+        query_info = Query(ip, query_id, query, results, ip, engine, date)
+        print(query_info.to_json())
+        self.new_queries.append(query_info)
+
+        return query_info
+
+    def query_post(self):
+        '''
+        Inserts the connections list into the database
+        '''
+
+        queries_list = [query.to_json() for query in self.new_queries]
+        self.new_queries = []
+        self.db_queries.insert_many(queries_list)
+
+    def query_get(self, query):
+        '''
+        Returns a list of connections based on the query sent
+        '''
+
+
+        return self.db_queries.find(query)
 
     """
     Ideas :)

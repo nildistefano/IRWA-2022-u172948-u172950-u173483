@@ -31,12 +31,6 @@ db_session = db['session']
 db_clicks = db['clicks']
 db_request = db['request']
 
-doc = {"session": "heyllo",
-       "text": "chinchuechonchan"}
-
-x = db_session.insert_one(doc)
-print(x.inserted_id)
-
 # *** for using method to_json in objects ***
 def _default(self, obj):
     return getattr(obj.__class__, "to_json", _default.default)(obj)
@@ -91,34 +85,25 @@ docu_length = dict()
 for doc in corpus.values():
     docu_length[doc.id] = len(doc.description)
 
-# just_entered bool
-global just_entered 
-just_entered = True
-
-
-
 # Home URL "/"
 @app.route('/')
 def index():
     print("starting home url /...")
-    global just_entered
     # flask server creates a session by persisting a cookie in the user's browser.
     # the 'session' object keeps data between multiple requests
-    session['some_var'] = "IRWA 2021 home"
-    if(just_entered):
-        print("Just entered...")
+    print(session.keys())
+    if 'first_connection' not in session.keys():
+        session['first_connection'] = datetime.now()
+        print("First session connection...")
         # Analytics for the user
         #...Getting the data
         browser = request.headers.get('User-Agent') #esto hay que gestionarlo que da un string raro
         ip = request.remote_addr
         country = "Spain" #get country from IP
         city = "Barcelona" #get city from IP
-        #...Storing rhe data
-        analytics_data.add_fact_browser(browser)
-        analytics_data.add_fact_city(city)
-        analytics_data.add_fact_country(country)
-        analytics_data.add_fact_ip(ip)
-
+        #...Storing the data
+        analytics_data.add_connection(ip=ip, country=country, city=city, browser=browser, date=datetime.utcnow())
+        analytics_data.connections_post()
         # Analytics of the session
         #...Getting the data
         local_time = str(datetime.now())
@@ -130,7 +115,6 @@ def index():
         #print("Remote IP: {} - JSON user browser {}".format(ip, agent))
         just_entered = False #so it is not filled again
         
-
     print(session)
 
     return render_template('index.html', page_title="Welcome")
