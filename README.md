@@ -86,5 +86,23 @@ The programs takes as input the `tweets_df.csv` generated in part 1. Builds an i
 
 The script can be run directly.
 
+## Part 4: User interface and web analytics
+
+### Before running
+
+The folder for this part is individual.
+
+Berify that the root directory contains:
+
+  - `tw_hurricaine_data_indexed.json` (modified input for `part_1.ipynb`)
+
+The required packages are specified at the top of each python script.
+
+### Functionality
+
+The application reads the JSON file an preprocesses all tweets (as in Part 1). This information is partially stored using MongoDB. Then application offers a search functionality and returns a ranking of documents based on the selected ranking function. The application also has other pages for exploring the results and visualising some web statistics.
+
+To run the application execute `web_app.py` and visit http://127.0.0.1:8088.
+
 
 
