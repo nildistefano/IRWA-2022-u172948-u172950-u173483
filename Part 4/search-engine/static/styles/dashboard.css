@@ -1,0 +1,12 @@
+.dashboard {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.plot {
+    width: 350px;
+    margin: 0;
+    margin-right: 1rem;
+}

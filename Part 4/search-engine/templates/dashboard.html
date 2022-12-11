@@ -26,88 +26,99 @@
         // 'visited_docs' is the data coming from Python code.
         // load the python list in the JS variable 'visits_list':
         const visits_list = {{ visited_docs | tojson | safe }};
-        
+    
     </script>
 
-    <h5>Ranking of Visited Documents</h5>
-    <canvas id="dailyVisits" width="400" height="400"></canvas>
-
-    <script>
-        // use JS map function top get just the tweet ids as labels
-        const visitsLabels = visits_list.map(a => "id: " + a.doc_id);
-        const visitsData = visits_list.map(a => a.counter);
-        const chartData1 = {
-            labels: visitsLabels,
-            datasets: [{
-                label: 'Visits count',
-                data: visitsData,
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }]
-        };
-
-        const ctx = document.getElementById('dailyVisits').getContext('2d');
-
-        // This will render the chart
-        const myChart = new Chart(ctx, {
-            type: 'line',
-            data: chartData1,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+    <div class="dashboard">
+      <div id="plot1" class="plot">
+        <h5>Ranking of Visited Documents</h5>
+        <canvas id="dailyVisits" width="400" height="400"></canvas>
+  
+        <script>
+            // use JS map function top get just the tweet ids as labels
+            const visitsLabels = visits_list.map(a => "id: " + a.doc_id);
+            const visitsData = visits_list.map(a => a.counter);
+            const chartData1 = {
+                labels: visitsLabels,
+                datasets: [{
+                    label: 'Visits count',
+                    data: visitsData,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            };
+  
+            const ctx = document.getElementById('dailyVisits').getContext('2d');
+  
+            // This will render the chart
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData1,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+                        xAxes: {
+                          ticks: {
+                            autoSkip: false,
+                            maxRotation: 90,
+                            minRotation: 90
+                          }
+                        }
                     }
                 }
-            }
-        });
-
-    </script>
-
-    <hr>
-    <h5>Print Python data for verification with graph above...</h5>
-    {% for doc in visited_docs %}
-        <div class="pb-3">
-            <div class="">
-                <span class="text-dark"> ({{ doc.counter }} visits) </span> — id: {{ doc.doc_id }}
-                — {{ doc.description }}
-            </div>
-        </div>
+            });
+        </script>
         <hr>
-    {% endfor %}
-
-
-
-    
-
-    <h5>Another example</h5>
-    <canvas id="dailyVisits2" width="400" height="400"></canvas>
-    <script>
-        const ctx2 = document.getElementById('dailyVisits2');
+        <h5>Documents by visits</h5>
+        {% for doc in visited_docs[:5] %}
+            <div class="pb-3">
+                <div class="result">
+                  <div class="username">
+                    <div class="user">
+                        id: <i class="fa fa-user"></i> {{ doc.doc_id }}
+                    </div>
+                  </div>
+                    <span class="text-dark"> ({{ doc.counter }} visits) </span>
+                    — {{ doc.description }}
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+      </div>
       
-        new Chart(ctx2, {
-          type: 'bar',
-          data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1,
-              borderColor: '#36A2EB'
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
+      <div id="plot2" class="plot">
+        <h5>Another example</h5>
+        <canvas id="dailyVisits2" width="400" height="400"></canvas>
+        <script>
+            const ctx2 = document.getElementById('dailyVisits2');
+          
+            new Chart(ctx2, {
+              type: 'bar',
+              data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                  label: '# of Votes',
+                  data: [12, 19, 3, 5, 2, 3],
+                  borderWidth: 1,
+                  borderColor: '#36A2EB'
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
               }
-            }
-          }
-        });
-      </script>
-
-
-
+            });
+        </script>
+        <div>{{visited_coun}}</div>
+      </div>
+    </div>
+    
 {% endblock %}
 
 

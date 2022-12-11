@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/header.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/results.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/doc_details.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/dashboard.css') }}">
     <title>{% block page_title %}{% endblock %} - IRWA Search Engine</title>
     {% block header %}{% endblock %}
 </head>
@@ -25,6 +26,7 @@
         <nav class="header-nav">
             <ul>
                 <li><a href="/stats">&laquo;</a></li>
+                <li><a href="/">Search</a></li>
                 <li><a href="/stats">Stats</a></li>
                 <li><a href="/dashboard">Dashboard</a></li>
             </ul>

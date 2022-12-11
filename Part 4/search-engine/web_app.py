@@ -106,7 +106,7 @@ def index():
         #...Getting the data
         local_time = str(datetime.now())
         #...Storing the data
-        analytics_data.add_fact_time_of_day(local_time)
+        #analytics_data.add_fact_time_of_day(local_time)
 
         # Other stuf...
         #agent = httpagentparser.detect(browser)
@@ -214,7 +214,12 @@ def dashboard():
     visited_ser=[]
     for doc in visited_docs:
         visited_ser.append(doc.to_json())
-    return render_template('dashboard.html', visited_docs=visited_ser)
+
+    visited_coun = []
+    for query in analytics_data.query_get():
+        visited_coun.append(query['query'])
+
+    return render_template('dashboard.html', visited_docs=visited_ser, visited_coun=visited_coun)
 
 
 @app.route('/sentiment')

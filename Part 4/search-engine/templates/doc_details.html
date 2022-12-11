@@ -1,22 +1,24 @@
 {% extends "base.html" %}
 {% block page_title %}{{ page_title }}{% endblock %}
 {% block content %}
-    {{ doc }}
-    <div id="doc-details">
-        <div id="doc-author">
-            {{ doc.author}}
+    <div class="username">
+        <div class="user">
+            Author: <i class="fa fa-user"></i> {{ doc.author }}
         </div>
-        <div id="doc-id">
-            {{ doc.id }}
-        </div>
-        <div id="doc-text">
-            {{ doc.text }}
-        </div>
-        <div id="doc-retweets">
-            {{ doc.retweets }}
-        </div>
-        <div id="doc-likes">
-            {{ doc.likes }}
+        <div class="date">
+            <i class="fa fa-calendar" aria-hidden="true"></i> {{ doc.doc_date }}
         </div>
     </div>
+    <div>
+        {{ doc.description }}
+    </div>
+    <div class="doc-context">
+        <div class="retweets">
+            Retweets: <i class="fa fa-retweet"></i> {{ doc.retweets }}
+        </div>
+        <div class="likes">
+            Likes: <i class="fa fa-thumbs-up"></i> {{ doc.likes }}
+        </div>
+    </div>
+    <div href="{{ doc.url }}">{{doc.url}}</div>
 {% endblock %}

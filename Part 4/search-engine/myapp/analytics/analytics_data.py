@@ -53,7 +53,7 @@ class AnalyticsData:
         self.new_connections = []
         self.db_connections.insert_many(connections_list)
 
-    def connections_get(self, query):
+    def connections_get(self, query={}):
         '''
         Returns a list of connections based on the query sent
         '''
@@ -85,7 +85,7 @@ class AnalyticsData:
         self.new_queries = []
         self.db_queries.insert_many(queries_list)
 
-    def query_get(self, query):
+    def query_get(self, query={}):
         '''
         Returns a list of queries based on the query sent
         '''
