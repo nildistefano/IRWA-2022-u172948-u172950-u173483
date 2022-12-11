@@ -1,8 +1,40 @@
-#doc-details div {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
 
+#doc-main, #doc-text {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0;
     font-size: 20px;
+}
+
+#doc-id {
+    font-size: 10px;
+    color: rgb(164, 164, 164);
+    margin-bottom: 0;
+}
+
+#doc-text {
+    padding: 20px 30px;
+    border-bottom: 1px solid black;
+}
+
+#doc-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 20px;
+}
+
+.doc-box {
+    flex: 1;
+    margin: 0;
+    padding: 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.doc-box:hover {
+    background-color: rgb(242, 242, 242)
 }
