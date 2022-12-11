@@ -39,12 +39,15 @@ class Query:
     date → date of the query
     """
 
-    def __init__(self, query_id, query, results, ip, engine, date):
+    def __init__(self, query_id, query, query_length, results, city, country, ranking_method, browser, date):
         self.query_id = query_id
         self.query = query
+        self.query_length = query_length
         self.results = results
-        self.ip = ip
-        self.engine = engine
+        self.city = city
+        self.country = country
+        self.ranking_method = ranking_method
+        self.browser = browser
         self.date = date
 
     def to_json(self):
@@ -61,8 +64,9 @@ class Document:
     Original corpus data as an object
     """
 
-    def __init__(self, id, title, description, doc_date, likes, retweets, url, hashtags):
+    def __init__(self, id, author, title, description, doc_date, likes, retweets, url, hashtags):
         self.id = id
+        self.author = author
         self.title = title
         self.description = description
         self.doc_date = doc_date
@@ -102,10 +106,13 @@ class StatsDocument:
 
 
 class ResultItem:
-    def __init__(self, id, title, description, doc_date, url, ranking):
+    def __init__(self, id, author, title, description, doc_date, likes, retweets, url, ranking):
         self.id = id
+        self.author = author
         self.title = title
         self.description = description
         self.doc_date = doc_date
+        self.likes = likes
+        self.retweets = retweets
         self.url = url
         self.ranking = ranking

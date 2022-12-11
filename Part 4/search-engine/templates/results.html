@@ -1,23 +1,48 @@
 {% extends "base.html" %}
 {% block page_title %}{{ page_title }}{% endblock %}
 {% block content %}
+    <div class="centered">
+        <p>&nbsp;</p>
+        <form class="d-flex" method="POST" onSubmit='return validate();' action="/search">
+            <input class="form-control me-2" name="search-query" type="search" placeholder="Search" aria-label="Search"
+                autofocus="autofocus" required>
+            <select name="ranking" id="ranking">
+                <option value="tf-idf_cosine-similarity">TF-IDF Cosine Similarity</option>
+                <option value="bm25">BM25</option>
+            </select>
+            <button class="btn btn-primary" type="submit" onclick='this.form.submit();'>Search</button>
+            <input name="upf-irwa-hidden" type="hidden" value="123">
+        </form>
+        <p>&nbsp;</p>
+    </div>
     Found <strong>{{ found_counter }}</strong> results...
     <hr>
     {% for item in results_list %}
-        <div class="pb-3">
-            <div class="doc-title">
-                <a href="{{ item.url }}">{{ item.title }}...
-                </a>
+        <div class="result" onclick="location.href='{{ item.url }}';">
+            <div class="username">
+                <div class="user">
+                    Author: <i class="fa fa-user"></i> {{ item.author }}
+                </div>
+                <div class="date">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> {{ item.doc_date }}
+                </div>
             </div>
-            <div class="cited">
-                <cite> <a href="{{ item.url }}"><i>Document details</i></a></cite>
+            <div class="result-section tweet-summary">
+                {{ item.title }} ...
             </div>
-            <div class="doc-desc">
-                {{ item.doc_date }} — {{ item.description }}
+            <div class="result-section tweet-full">
+                {{ item.description }}
+            </div>
+            <div class="doc-context">
+                <div class="retweets">
+                    Retweets: <i class="fa fa-retweet"></i> {{ item.retweets }}
+                </div>
+                <div class="likes">
+                    Likes: <i class="fa fa-thumbs-up"></i> {{ item.likes }}
+                </div>
             </div>
         </div>
         <hr>
 
     {% endfor %}
 {% endblock %}
-

@@ -326,5 +326,5 @@ def search_tf_idf(query, index, ranking, idf, tf, docu_length):
     elif (ranking == "tf-idf_cosine-similarity"):
         ranked_docs = rank_documents(query, docs, index, idf, tf)
     else:
-        print("We don't have this way of ranking... Maybe try with: \n 1) bm25 \n 2) dedicated-ranking (our own) \n 3) classical-tf-idf")
+        print("Something went wrong")
     return ranked_docs

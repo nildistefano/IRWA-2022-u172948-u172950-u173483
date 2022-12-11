@@ -1,0 +1,49 @@
+.result {
+    border: 3px solid rgb(185, 185, 185);
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+.result:hover {
+    border: 3px solid #c8102e;
+    background-color: rgb(238, 238, 238);
+}
+
+.result-section {
+    padding: 5px 0px 15px 0px;
+}
+
+.username {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 0;
+}
+
+.doc-context {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+    align-items: center;
+    margin: 0;
+    margin-bottom: 0;
+}
+
+.tweet-full {
+    display: none;
+}
+
+.result:hover .tweet-full{
+    display: block;
+}
+
+.result:hover .tweet-summary{
+    display: none;
+}
+
+.doc-context div {
+    margin: 0px 10px
+}

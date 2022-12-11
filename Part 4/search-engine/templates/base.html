@@ -3,18 +3,32 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {# Using Bootstrap v4.6.1 #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='styles/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/results.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/doc_details.css') }}">
     <title>{% block page_title %}{% endblock %} - IRWA Search Engine</title>
     {% block header %}{% endblock %}
 </head>
 <body>
+
 <div class="container">
-    <div class='header text-center'>
-        <a href="/">
+    <div class="header">
+        <nav class="title-nav">
             <img src="{{ url_for('static', filename='logo.png') }}" width="100" alt="UPF logo"/>
-        </a>
-        <span> IRWA Search Engine </span>
+            <a class="header-title" href="/">TweetQuerier</a>
+        </nav>
+    </div>
+    <div class="header">
+        <nav class="header-nav">
+            <ul>
+                <li><a href="/stats">&laquo;</a></li>
+                <li><a href="/stats">Stats</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+            </ul>
+        </nav>
     </div>
     <hr>
     <div class='content'>

@@ -1,3 +1,7 @@
+:root {
+    --red-color: (200, 16, 46);
+}
+
 .container {
     max-width: 800px;
     padding-top: 10px;
@@ -18,13 +22,16 @@
 .btn-primary,
 .btn-primary:active,
 .btn-primary:focus,
-.btn-primary:hover,
 .btn-primary:not(:disabled):not(.disabled):active {
     /*color: #ffffff;*/
-    background-color: #c8102e;
-    border-color: #c8102e;
+    background-color: rgb(200, 16, 46);
+    border-color: rgb(200, 16, 46);
 }
 
+.btn-primary:hover {
+    background-color: rgb(106, 9, 25);
+    border-color: rgb(0, 0, 0);
+}
 
 .header {
     font-size: 1.7em;

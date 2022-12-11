@@ -115,6 +115,6 @@ def load_tweets_as_dataframe3(json_data):
 
 
 def _row_to_doc_dict(row: pd.Series):
-    _corpus[row['Id']] = Document(row['Id'], row['Tweet'][0:100], row['Tweet'], row['Date'], row['Likes'],
+    _corpus[row['Id']] = Document(row['Id'], row['Username'], row['Tweet'][0:100], row['Tweet'], row['Date'], row['Likes'],
                                   row['Retweets'],
                                   row['Url'], row['Hashtags'])

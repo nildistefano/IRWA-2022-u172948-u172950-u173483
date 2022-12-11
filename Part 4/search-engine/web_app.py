@@ -56,8 +56,6 @@ search_engine = SearchEngine()
 analytics_data = AnalyticsData()
 
 
-
-
 # print("current dir", os.getcwd() + "\n")
 # print("__file__", __file__ + "\n")
 full_path = os.path.realpath(__file__)
@@ -129,13 +127,6 @@ def search_form_post():
 
     search_id = analytics_data.save_query_terms(search_query)
 
-    # Analytics of the query
-    #...Storing the data
-    analytics_data.add_fact_query(search_query)
-    analytics_data.add_fact_query_length(len(search_query))
-    for term in search_query:
-        analytics_data.add_fact_terms_count(term)
-
     #results = search_engine.search(search_query, search_id, corpus)
     # ranking_method = "tf-idf_cosine-similarity"
     # #ranking_method = "bm25"
@@ -143,7 +134,16 @@ def search_form_post():
 
     found_count = len(results)
     session['last_found_count'] = found_count
+    print('\n\n')
+    print(results)
 
+    browser = request.headers.get('User-Agent') #esto hay que gestionarlo que da un string raro
+    country = "Spain" #get country from IP
+    city = "Barcelona" #get city from IP
+
+    #Save analytics
+    analytics_data.add_query(query_id=search_id, query=search_query, query_length=len(search_query), results='', city=city, country=country, ranking_method=ranking_method, browser=browser, date=datetime.utcnow())
+    analytics_data.query_post()
     print(session)
 
     return render_template('results.html', results_list=results, page_title="Results", found_counter=found_count)
@@ -164,8 +164,9 @@ def doc_details():
     # get the query string parameters from request
     clicked_doc_id = request.args["id"]
     p1 = int(request.args["search_id"])  # transform to Integer
-    p2 = int(request.args["param2"])  # transform to Integer
     print("click in id={}".format(clicked_doc_id))
+
+    doc = search_engine.get_doc(corpus, request.args["id"])
 
     # store data in statistics table 1
     if clicked_doc_id in analytics_data.fact_clicks.keys():
@@ -175,7 +176,7 @@ def doc_details():
 
     print("fact_clicks count for id={} is {}".format(clicked_doc_id, analytics_data.fact_clicks[clicked_doc_id]))
 
-    return render_template('doc_details.html')
+    return render_template('doc_details.html', doc=doc, page_title="Tweet: {}".format(doc.id))
 
 
 @app.route('/stats', methods=['GET'])
