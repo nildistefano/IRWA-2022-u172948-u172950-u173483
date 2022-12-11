@@ -23,6 +23,12 @@
     -->
 
     <script>
+        var dynamicColors = function() {
+          var r = Math.floor(Math.random() * 255);
+          var g = Math.floor(Math.random() * 255);
+          var b = Math.floor(Math.random() * 255);
+          return "rgb(" + r + "," + g + "," + b + ")";
+        };
         // 'visited_docs' is the data coming from Python code.
         // load the python list in the JS variable 'visits_list':
         const visits_list = {{ visited_docs | tojson | safe }};
@@ -90,47 +96,69 @@
       </div>
       
       <div id="plot2" class="plot">
+        <h5>Visitors origins</h5>
+        <canvas id="dailyVisits2" width="400" height="400"></canvas>
         <script>
-          const counts = JSON.parse(countries)
-          print(counts)
-          const labels = counts.map(a => counts.keys());
-          const dataCountries = counts.map(a => counts.values());
+          
+          const counts = {{countries | tojson | safe}}
+          const read = JSON.parse(counts)
+          
+          const countryLabels = Object.entries(read).map(([k, v]) => k);
+          const countryCount = Object.entries(read).map(([k, v]) => v);
+          const colors = Object.entries(read).map(([k, v]) => dynamicColors());
+
           const chartData2 = {
-                labels: labels,
+                labels: countryLabels,
                 datasets: [{
                     label: 'Visits count',
-                    data: dataCountries,
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
+                    data: countryCount,
+                    fill: true,
+                    backgroundColor: colors,
                     tension: 0.1
                 }]
             };
             
             const ctx2 = document.getElementById('dailyVisits2').getContext('2d');
             const myChart2 = new Chart(ctx2, {
-                type: 'line',
+                type: 'doughnut',
                 data: chartData2,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        },
-                        xAxes: {
-                          ticks: {
-                            autoSkip: false,
-                            maxRotation: 90,
-                            minRotation: 90
-                          }
-                        }
-                    }
-                }
             });
         </script>
-        <h5>Another example</h5>
-        <canvas id="dailyVisits2" width="400" height="400"></canvas>
-        <div>{{countries}}</div>
+        
       </div>
     </div>
+    <div>
+      <canvas id="queriesPlot" width="400" height="400"></canvas>
+      <script>
+          
+        const countsQ = {{queries | tojson | safe}}
+        const readQ = JSON.parse(countsQ)
+
+        const queryLabels = Object.entries(readQ).map(([k, v]) => k);
+        const queryCount = Object.entries(readQ).map(([k, v]) => v);
+        const colorsQ = Object.entries(readQ).map(([k, v]) => dynamicColors());
+
+
+
+        const chartData3 = {
+              labels: queryLabels,
+              datasets: [{
+                  label: 'Visits count',
+                  data: queryCount,
+                  fill: true,
+                  backgroundColor: colorsQ,
+                  tension: 0.1
+              }]
+          };
+          
+          const ctx3 = document.getElementById('queriesPlot').getContext('2d');
+          const myChart3 = new Chart(ctx3, {
+              type: 'doughnut',
+              data: chartData3,
+          });
+      </script>
+    </div>
+    
     
 {% endblock %}
 

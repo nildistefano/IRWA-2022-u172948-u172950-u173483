@@ -64,7 +64,7 @@ full_path = os.path.realpath(__file__)
 path, filename = os.path.split(full_path)
 # print(path + ' --> ' + filename + "\n")
 # load documents corpus into memory.
-file_path = path + "/tw_hurricane_data.json"
+file_path = path + "/tw_hurricane_data_indexed.json"
 
 # file_path = "../../tweets-data-who.json"
 corpus = load_corpus(file_path) #We get a dictionnary key=doc_id, values-> <class 'myapp.search.objects.Document'>
@@ -224,6 +224,15 @@ def dashboard():
     queries = []
     for query in analytics_data.query_get():
         queries.append(query['query'])
+    
+    queries_count = {}
+    for query in queries:
+        if query in queries_count.keys():
+            queries_count[query] += 1
+        else:
+            queries_count[query] = 1
+
+    queries = json.dumps(queries_count)
 
     countries = []
     for connection in analytics_data.connections_get():
@@ -235,8 +244,10 @@ def dashboard():
             countries_count[country] += 1
         else:
             countries_count[country] = 1
+    
+    coutries = json.dumps(countries_count)
 
-    return render_template('dashboard.html', visited_docs=visited_ser, queries=queries, countries=json.dumps(countries_count))
+    return render_template('dashboard.html', visited_docs=visited_ser, queries=queries, countries=coutries)
 
 
 @app.route('/sentiment')
