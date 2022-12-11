@@ -6,6 +6,8 @@ from datetime import datetime
 import httpagentparser  # for getting the user agent as json
 import nltk
 import flask
+import json
+import pandas as pd
 from flask import Flask, render_template, session
 from flask import request
 
@@ -62,7 +64,7 @@ full_path = os.path.realpath(__file__)
 path, filename = os.path.split(full_path)
 # print(path + ' --> ' + filename + "\n")
 # load documents corpus into memory.
-file_path = path + "/tweets-data-who.json"
+file_path = path + "/tw_hurricane_data_indexed.json"
 
 # file_path = "../../tweets-data-who.json"
 corpus = load_corpus(file_path) #We get a dictionnary key=doc_id, values-> <class 'myapp.search.objects.Document'>
@@ -82,6 +84,10 @@ except:
 docu_length = dict()
 for doc in corpus.values():
     docu_length[doc.id] = len(doc.description)
+
+tweet_info = {}
+for doc in corpus.values():
+    tweet_info[doc.id] = (doc.hashtags, doc.likes, doc.retweets) 
 
 # Home URL "/"
 @app.route('/')
@@ -130,7 +136,7 @@ def search_form_post():
     #results = search_engine.search(search_query, search_id, corpus)
     # ranking_method = "tf-idf_cosine-similarity"
     # #ranking_method = "bm25"
-    results = search_engine.search(corpus, search_id, search_query, our_index, ranking_method, idf, tf, docu_length)
+    results = search_engine.search(corpus, search_id, search_query, our_index, ranking_method, idf, tf, docu_length, tweet_info)
 
     found_count = len(results)
     session['last_found_count'] = found_count
@@ -215,11 +221,33 @@ def dashboard():
     for doc in visited_docs:
         visited_ser.append(doc.to_json())
 
-    visited_coun = []
+    queries = []
     for query in analytics_data.query_get():
-        visited_coun.append(query['query'])
+        queries.append(query['query'])
+    
+    queries_count = {}
+    for query in queries:
+        if query in queries_count.keys():
+            queries_count[query] += 1
+        else:
+            queries_count[query] = 1
 
-    return render_template('dashboard.html', visited_docs=visited_ser, visited_coun=visited_coun)
+    queries = json.dumps(queries_count)
+
+    countries = []
+    for connection in analytics_data.connections_get():
+        countries.append(connection['country'])
+    
+    countries_count = {}
+    for country in countries:
+        if country in countries_count.keys():
+            countries_count[country] += 1
+        else:
+            countries_count[country] = 1
+    
+    coutries = json.dumps(countries_count)
+
+    return render_template('dashboard.html', visited_docs=visited_ser, queries=queries, countries=coutries)
 
 
 @app.route('/sentiment')
