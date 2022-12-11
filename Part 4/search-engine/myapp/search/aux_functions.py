@@ -178,7 +178,7 @@ def rank_documents_bm25(terms, docs, index, idf, tf, k1, b, N, docu_length, lavg
     #print ('\n'.join(result_docs), '\n')
     return doc_scores
 
-def rank_documents_dedicated(terms, docs, index, idf, tf, k1, b, N, docu_length, lavg, info):
+def rank_documents_dedicated(terms, docs, index, idf, tf, k1, b, N, docu_length, lavg, tweet_info):
     """
     Perform the ranking of the results of a search based on the tf-idf weights
     
@@ -188,7 +188,7 @@ def rank_documents_dedicated(terms, docs, index, idf, tf, k1, b, N, docu_length,
     index -- inverted index data structure
     idf -- inverted document frequencies
     tf -- term frequencies
-    info -- Info that will be used to add puntuation to the document
+    tweet_info -- tweet_info that will be used to add puntuation to the document
     
     Returns:
     list of ranked documents
@@ -213,23 +213,27 @@ def rank_documents_dedicated(terms, docs, index, idf, tf, k1, b, N, docu_length,
     # Calculate the score of each doc (the sum of the results)    
     doc_scores=[[np.sum(curDocVec), doc] for doc, curDocVec in doc_vectors.items() ]
     doc_scores = []
-    doc_scores_info = []
+    doc_scores_tweet_info = []
+
+    max_likes = max(tweet_info.values(), key=lambda sub: sub[1])[1]
+    max_retweets = max(tweet_info.values(), key=lambda sub: sub[2])[2]
+    
 
     for doc, curDocVec in doc_vectors.items():
         # BM score
         bm_score = np.sum(curDocVec)
         # Hashtag score
-        h_score = len([term for term in terms if term.lower() in [x.lower() for x in info[info['Document'] == doc]['Hashtags']]])/len(terms)
+        h_score = len([term for term in terms if term.lower() in [x.lower() for x in tweet_info[doc][0]]])/len(terms)
         # Likes score
-        l_score = math.log(1+(info[info['Document'] == doc]['Likes']/1 + info['Likes'].max()))
+        l_score = math.log(1+(tweet_info[doc][1]/(1 + max_likes)))
         # Retweets score
-        r_score = math.log(1+(info[info['Document'] == doc]['Retweets']/1 + info['Retweets'].max()))
+        r_score = math.log(1+(tweet_info[doc][2]/(1 + max_retweets)))
         # Relevance score
         relevance_score = 0.4 * h_score + 0.3 * l_score + 0.3 * r_score
         # Dedicated score
         total_score = bm_score * (1+relevance_score)/relevance_score
         doc_scores.append([total_score, doc])
-        doc_scores_info.append([bm_score, h_score, l_score, r_score, doc])
+        doc_scores_tweet_info.append([bm_score, h_score, l_score, r_score, doc])
 
 
     doc_scores.sort(reverse=True)
@@ -238,7 +242,7 @@ def rank_documents_dedicated(terms, docs, index, idf, tf, k1, b, N, docu_length,
     if len(doc_scores) == 0:
         print("No results found for query")
     #print ('\n'.join(result_docs), '\n')
-    return doc_scores, doc_scores_info
+    return doc_scores, doc_scores_tweet_info
 
 #Let's keep that as a reference
 def rank_documents(terms, docs, index, idf, tf):
@@ -294,7 +298,7 @@ def rank_documents(terms, docs, index, idf, tf):
 
 
 
-def search_tf_idf(query, index, ranking, idf, tf, docu_length):
+def search_tf_idf(query, index, ranking, idf, tf, docu_length, tweet_info):
     """
     output is the list of documents that contain any of the query terms. 
     So, we will get the list of documents for each query term, and take the union of them.
@@ -322,7 +326,7 @@ def search_tf_idf(query, index, ranking, idf, tf, docu_length):
     if (ranking == "bm25"):
         ranked_docs = rank_documents_bm25(query, docs, index, idf, tf, k1 = 1.6, b = 0.75, N = len(docu_length), docu_length = docu_length, lavg=lavg) #TO-DO new formula!! (new function, new attributes)
     elif ranking == "dedicated":
-        ranked_docs, _ = rank_documents_dedicated(query, docs, index, idf, tf, k1 = 1.6, b = 0.75, N = len(docu_length), docu_length = docu_length, lavg = lavg, info=data[['Document', 'Hashtags', 'Likes', 'Retweets']]) 
+        ranked_docs, _ = rank_documents_dedicated(query, docs, index, idf, tf, k1 = 1.6, b = 0.75, N = len(docu_length), docu_length = docu_length, lavg = lavg, tweet_info=tweet_info) 
     elif (ranking == "tf-idf_cosine-similarity"):
         ranked_docs = rank_documents(query, docs, index, idf, tf)
     else:

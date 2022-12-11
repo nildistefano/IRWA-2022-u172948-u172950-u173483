@@ -5,7 +5,7 @@ from myapp.search.aux_functions import search_tf_idf
 
 import datetime
 
-def build_results(corpus, search_id, search_query, index, ranking, idf, tf, docu_length) :
+def build_results(corpus, search_id, search_query, index, ranking, idf, tf, docu_length, tweet_info) :
     """
     PRE: corpus (dictionnary of Documents, key=doc_id), search_id, search_query (example: "Weather Kansas"),
     index (inverted_index of your documents), ranking (ranking method, example: "bm25"), idf, tdf
@@ -14,7 +14,7 @@ def build_results(corpus, search_id, search_query, index, ranking, idf, tf, docu
     POST: a list of demo docs sorted by ranking
     """
     res = []
-    ranked_docs = search_tf_idf(search_query, index, ranking, idf, tf, docu_length)
+    ranked_docs = search_tf_idf(search_query, index, ranking, idf, tf, docu_length, tweet_info)
     for doc in ranked_docs[:10]:
         rank = doc[0]
         id = doc[1]
@@ -32,9 +32,9 @@ def build_results(corpus, search_id, search_query, index, ranking, idf, tf, docu
 
 class SearchEngine:
     #Our search function
-    def search(self, corpus, search_id, search_query, index, ranking, idf, tf, docu_length):
+    def search(self, corpus, search_id, search_query, index, ranking, idf, tf, docu_length, tweet_info):
         print("Search query:", search_query)
-        results = build_results(corpus, search_id, search_query, index, ranking, idf, tf, docu_length) 
+        results = build_results(corpus, search_id, search_query, index, ranking, idf, tf, docu_length, tweet_info) 
         return results
     
     def get_doc(self, corpus, doc_id):
