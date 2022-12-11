@@ -40,9 +40,10 @@ class SearchEngine:
     def get_doc(self, corpus, doc_id):
         print("getting doc {} info".format(doc_id))
         item = corpus[int(doc_id)]
+        print(item)
         date = item.doc_date.split(' ')
         new_date = ' '.join((date[2], date[1], date[5], date[3]))
         doc = Document(item.id, item.author, item.title, item.description, new_date, item.likes, item.retweets,
-                              item.url, item.hashtags)
+                              item.url, item.hashtags, item.image, item.background_image)
         return doc
 

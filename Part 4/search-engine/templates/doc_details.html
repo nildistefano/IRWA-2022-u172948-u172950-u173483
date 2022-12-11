@@ -3,12 +3,12 @@
 {% block content %}
     <p id="doc-id">Tweet id: {{ doc.id }}</p>
     <div id="doc-main">
-        <div class="user">
-            <img src="https://pbs.twimg.com/profile_images/1519336729802588160/cuawoLoL_400x400.jpg" alt="Girl in a jacket" width="50" height="50">
-            Author: <i class="fa fa-user"></i> {{ doc.author }}
+        <div class="user-2" style="background-image: url({{ doc.background_image }})"";>
+            <img class="profile" src="{{ doc.image }}" alt="Profile image" width="100" height="100">
+            {{ doc.author }}
         </div>
         <div class="date">
-            <i class="fa fa-calendar" aria-hidden="true"></i> {{ doc.doc_date }}
+            <p id="doc-date"><i class="fa fa-calendar" aria-hidden="true"></i> {{ doc.doc_date }}</p>
         </div>
     </div>
     <div id="doc-text">

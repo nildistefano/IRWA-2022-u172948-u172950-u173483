@@ -1,4 +1,9 @@
 
+.profile {
+    border-radius: 50%;
+    border: 2px solid #c8102e;
+  }
+
 #doc-main, #doc-text {
     width: 100%;
     display: flex;
@@ -6,6 +11,13 @@
     justify-content: space-between;
     margin-bottom: 0;
     font-size: 20px;
+}
+
+#doc-date {
+    border-bottom: 2px solid black;
+    padding: 5px;
+    border-radius: 5%;
+    background-color: rgb(245, 245, 245);
 }
 
 #doc-id {
@@ -24,6 +36,12 @@
     flex-direction: row;
     justify-content: space-between;
     font-size: 20px;
+}
+
+.user-2 {
+    font-size: 50px;
+    padding: 15px;
+    border: 2px solid black;
 }
 
 .doc-box {

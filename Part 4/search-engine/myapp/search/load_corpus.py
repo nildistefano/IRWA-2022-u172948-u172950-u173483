@@ -30,10 +30,10 @@ def _load_corpus_as_dataframe(path):
     corpus = tweets_df.rename(
         columns={"id": "Id", "full_text": "Tweet", "screen_name": "Username", "created_at": "Date",
                  "favorite_count": "Likes",
-                 "retweet_count": "Retweets", "lang": "Language"})
+                 "retweet_count": "Retweets", "lang": "Language", "profile_image_url_https": "Image", "profile_banner_url": "Background_image"})
 
     # select only interesting columns
-    filter_columns = ["Id", "Tweet", "Username", "Date", "Hashtags", "Likes", "Retweets", "Url", "Language"]
+    filter_columns = ["Id", "Tweet", "Username", "Date", "Hashtags", "Likes", "Retweets", "Url", "Language", "Image", "Background_image"]
     corpus = corpus[filter_columns]
     return corpus
 
@@ -46,6 +46,7 @@ def _load_tweets_as_dataframe(json_data):
     data = pd.concat([data.drop(['user'], axis=1), data['user'].apply(pd.Series).rename(
         columns={"created_at": "user_created_at", "id": "user_id", "id_str": "user_id_str", "lang": "user_lang"})],
                      axis=1)
+    
     return data
 
 
@@ -117,4 +118,4 @@ def load_tweets_as_dataframe3(json_data):
 def _row_to_doc_dict(row: pd.Series):
     _corpus[row['Id']] = Document(row['Id'], row['Username'], row['Tweet'][0:100], row['Tweet'], row['Date'], row['Likes'],
                                   row['Retweets'],
-                                  row['Url'], row['Hashtags'])
+                                  row['Url'], row['Hashtags'], row['Image'], row['Background_image'])
