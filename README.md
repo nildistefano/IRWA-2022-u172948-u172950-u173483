@@ -10,6 +10,7 @@
 - **[Part 1: Text Processing](#part-1-text-processing)**
 - **[Part 2: Indexing and Evaluation](#part-2-indexing-and-evaluation)**
 - **[Part 3: Ranking](#part-3-ranking)**
+- **[Part 4: User interface and web analytics](#part-3-ranking)**
 
 ## Part 1: Text Processing
 
